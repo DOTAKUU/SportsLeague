@@ -15,11 +15,32 @@ namespace SportsLeague.DataAccess.Context
         public DbSet<Referee> Referees => Set<Referee>();         
         public DbSet<Tournament> Tournaments => Set<Tournament>();
         public DbSet<TournamentTeam> TournamentTeams => Set<TournamentTeam>();
+        public DbSet<Sponsor> Sponsors => Set<Sponsor>();
+        public DbSet<TournamentSponsor> TournamentSponsors { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+           // --Sponsors--
+            modelBuilder.Entity<Sponsor>()
+            .HasIndex(s => s.Name)
+            .IsUnique();
+
+            modelBuilder.Entity<TournamentSponsor>()
+            .HasOne(ts => ts.Tournament)
+            .WithMany(t => t.TournamentSponsors)
+             .HasForeignKey(ts => ts.TournamentId);
+
+            modelBuilder.Entity<TournamentSponsor>()
+                .HasOne(ts => ts.Sponsor)
+                .WithMany(s => s.TournamentSponsors)
+                .HasForeignKey(ts => ts.SponsorId);
+
+            modelBuilder.Entity<TournamentSponsor>()
+                .HasIndex(ts => new { ts.TournamentId, ts.SponsorId })
+                .IsUnique();
 
             // ── Team Configuration ──
             modelBuilder.Entity<Team>(entity =>

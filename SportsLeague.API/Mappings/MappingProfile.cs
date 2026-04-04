@@ -9,6 +9,10 @@ namespace SportsLeague.API.Mappings
     {
         public MappingProfile()
         {
+            //Sponsor mappings
+            CreateMap<Sponsor, SponsorResponseDTO>();
+            CreateMap<SponsorRequestDTO, Sponsor>();
+
             // Team mappings
             CreateMap<TeamRequestDTO, Team>();
             CreateMap<Team, TeamResponseDTO>();
