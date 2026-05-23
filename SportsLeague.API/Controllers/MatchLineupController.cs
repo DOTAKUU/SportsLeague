@@ -23,7 +23,7 @@ namespace SportsLeague.API.Controllers
         // POST /api/match/{matchId}/lineup
         [HttpPost]
         public async Task<ActionResult<MatchLineupResponseDTO>> AddPlayerToLineup(
-            int matchId, MatchLineupResponseDTO dto)
+            int matchId, MatchLineupRequestDTO dto)
         {
             try
             {
